@@ -3,7 +3,7 @@ package ru.ifmo.rain.issuer.domain;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
-public class HashContainer {
+public class Cvv2Container {
     @NotNull
     private Long id;
     @NotNull
