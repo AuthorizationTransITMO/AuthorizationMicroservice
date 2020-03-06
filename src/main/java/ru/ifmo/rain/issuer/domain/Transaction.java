@@ -1,11 +1,30 @@
 package ru.ifmo.rain.issuer.domain;
 
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
+
 public class Transaction {
+    @NotNull
+    @NotEmpty
     private String acquire;
+    @NotNull
+    @NotEmpty
+    @Pattern(regexp = "(\\d ){16,}", message = "invalid account number")
     private String number;
+    @NotNull
     private Double count;
+    @NotNull
+    @NotEmpty
+    @Pattern(regexp = "\\d\\d/\\d\\d")
     private String overDate;
+    @NotNull
+    @NotEmpty
+    @Size(min = 3, max = 3)
     private String cvv2;
+    @NotNull
+    @NotEmpty
     private String ownerName;
 
     public String getAcquire() {

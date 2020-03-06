@@ -1,11 +1,17 @@
 package ru.ifmo.rain.issuer.domain;
 
+
+import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.util.Date;
 
+@Entity
+@Table(uniqueConstraints = @UniqueConstraint(columnNames = "number"))
 public class Account {
     @NotNull
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     @NotNull
     @NotEmpty
