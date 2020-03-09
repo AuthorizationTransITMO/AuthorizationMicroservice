@@ -7,14 +7,14 @@ import javax.validation.constraints.Pattern;
 public class Transaction {
     @NotNull
     @NotEmpty
-    @Pattern(regexp = "(\\d ){16,}", message = "invalid account number")
+    @Pattern(regexp = "[\\d ]{16,}", message = "invalid account number")
     private String number;
     @NotNull
     private Double count;
     @NotNull
     @NotEmpty
-    @Pattern(regexp = "\\d\\d/\\d\\d")
-    private String data;
+    @Pattern(regexp = "\\d\\d/\\d\\d(\\d\\d)?")
+    private String date;
     @NotNull
     @NotEmpty
     private String ownerName;
@@ -23,7 +23,7 @@ public class Transaction {
     private String action;
     @NotNull
     @NotEmpty
-    private String dataAction;
+    private String dateAction;
 
     public String getNumber() {
         return number;
@@ -39,14 +39,6 @@ public class Transaction {
 
     public void setCount(Double count) {
         this.count = count;
-    }
-
-    public String getData() {
-        return data;
-    }
-
-    public void setData(String data) {
-        this.data = data;
     }
 
     public String getOwnerName() {
@@ -65,12 +57,19 @@ public class Transaction {
         this.action = action;
     }
 
-    public String getDataAction() {
-        return dataAction;
+    public String getDate() {
+        return date;
     }
 
-    public void setDataAction(String dataAction) {
-        this.dataAction = dataAction;
+    public void setDate(String date) {
+        this.date = date;
     }
 
+    public String getDateAction() {
+        return dateAction;
+    }
+
+    public void setDateAction(String dateAction) {
+        this.dateAction = dateAction;
+    }
 }

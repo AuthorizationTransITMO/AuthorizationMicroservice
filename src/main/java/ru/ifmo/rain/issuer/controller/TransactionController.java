@@ -1,10 +1,9 @@
 package ru.ifmo.rain.issuer.controller;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import ru.ifmo.rain.issuer.domain.Transaction;
 import ru.ifmo.rain.issuer.service.CheckService;
 
@@ -20,12 +19,20 @@ public class TransactionController {
         this.checkService = checkService;
     }
 
+    private static class Response {
+        public String response;
+    }
+
     @GetMapping("/handle")
-    public String handle(@Valid @ModelAttribute("transaction") Transaction transaction,
-                         BindingResult bindingResult) {
+    @ResponseBody
+    public Response handle(@RequestBody @Valid Transaction transaction,
+                           BindingResult bindingResult) {
+        Response response = new Response();
         if (bindingResult.hasErrors()) {
-            return "Incorrect transaction";
+            response.response = "Incorrect transaction";
+        } else {
+            response.response = checkService.check(transaction);
         }
-        return checkService.check(transaction);
+        return response;
     }
 }

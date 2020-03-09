@@ -23,6 +23,6 @@ public class CheckService {
         // пример изменения аккаунта
         account.get().setCount(0d);
         accountRepository.save(account.get());
-        return null;
+        return "OK";
     }
 }

@@ -7,7 +7,7 @@ import javax.validation.constraints.NotNull;
 import java.util.Date;
 
 @Entity
-@Table(uniqueConstraints = @UniqueConstraint(columnNames = "number"))
+@Table(name = "account", uniqueConstraints = @UniqueConstraint(columnNames = "number"))
 public class Account {
     @NotNull
     @Id
