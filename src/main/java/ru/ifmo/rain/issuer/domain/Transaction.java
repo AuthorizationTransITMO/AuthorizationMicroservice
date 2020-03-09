@@ -15,18 +15,16 @@ public class Transaction {
     @NotNull
     @NotEmpty
     @Pattern(regexp = "\\d\\d/\\d\\d")
-    private String overDate;
-    @NotNull
-    @NotEmpty
-    @Size(min = 3, max = 3)
-    private String cvv2;
+    private String data;
     @NotNull
     @NotEmpty
     private String ownerName;
     @NotNull
     @NotEmpty
     private String action;
-
+    @NotNull
+    @NotEmpty
+    private String dataAction;
 
     public String getNumber() {
         return number;
@@ -44,20 +42,12 @@ public class Transaction {
         this.count = count;
     }
 
-    public String getOverDate() {
-        return overDate;
+    public String getData() {
+        return data;
     }
 
-    public void setOverDate(String overDate) {
-        this.overDate = overDate;
-    }
-
-    public String getCvv2() {
-        return cvv2;
-    }
-
-    public void setCvv2(String cvv2) {
-        this.cvv2 = cvv2;
+    public void setData(String data) {
+        this.data = data;
     }
 
     public String getOwnerName() {
@@ -75,4 +65,13 @@ public class Transaction {
     public void setAction(String action) {
         this.action = action;
     }
+
+    public String getDataAction() {
+        return dataAction;
+    }
+
+    public void setDataAction(String dataAction) {
+        this.dataAction = dataAction;
+    }
+
 }
