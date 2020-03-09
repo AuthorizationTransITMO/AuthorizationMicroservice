@@ -17,6 +17,7 @@ public class CheckService {
 
     public String check(Transaction transaction) {
         // пример запроса аккаунта
+        // на нулы провере
         Optional<Account> account = accountRepository.findByNumber(transaction.getNumber());
         // TODO
         // пример изменения аккаунта
