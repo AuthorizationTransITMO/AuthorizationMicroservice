@@ -1,8 +1,11 @@
 package ru.ifmo.rain.issuer.service;
 
 import org.springframework.stereotype.Service;
+import ru.ifmo.rain.issuer.domain.Account;
 import ru.ifmo.rain.issuer.domain.Transaction;
 import ru.ifmo.rain.issuer.repository.AccountRepository;
+
+import java.util.Optional;
 
 @Service
 public class CheckService {
@@ -13,7 +16,12 @@ public class CheckService {
     }
 
     public String check(Transaction transaction) {
+        // пример запроса аккаунта
+        Optional<Account> account = accountRepository.findByNumber(transaction.getNumber());
         // TODO
+        // пример изменения аккаунта
+        account.get().setCount(0d);
+        accountRepository.save(account.get());
         return null;
     }
 }
