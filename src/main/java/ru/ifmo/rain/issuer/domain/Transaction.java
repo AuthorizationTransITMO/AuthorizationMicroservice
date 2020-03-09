@@ -8,9 +8,6 @@ import javax.validation.constraints.Size;
 public class Transaction {
     @NotNull
     @NotEmpty
-    private String acquire;
-    @NotNull
-    @NotEmpty
     @Pattern(regexp = "(\\d ){16,}", message = "invalid account number")
     private String number;
     @NotNull
@@ -26,14 +23,10 @@ public class Transaction {
     @NotNull
     @NotEmpty
     private String ownerName;
+    @NotNull
+    @NotEmpty
+    private String action;
 
-    public String getAcquire() {
-        return acquire;
-    }
-
-    public void setAcquire(String acquire) {
-        this.acquire = acquire;
-    }
 
     public String getNumber() {
         return number;
@@ -73,5 +66,13 @@ public class Transaction {
 
     public void setOwnerName(String ownerName) {
         this.ownerName = ownerName;
+    }
+
+    public String getAction() {
+        return action;
+    }
+
+    public void setAction(String action) {
+        this.action = action;
     }
 }
