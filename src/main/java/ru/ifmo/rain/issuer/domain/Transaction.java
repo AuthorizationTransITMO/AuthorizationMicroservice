@@ -24,6 +24,17 @@ public class Transaction {
     @NotNull
     @NotEmpty
     private String dateAction;
+    @NotNull
+    @NotEmpty
+    private String targetPlace;
+
+    public String getTargetPlace() {
+        return targetPlace;
+    }
+
+    public void setTargetPlace(String targetPlace) {
+        this.targetPlace = targetPlace;
+    }
 
     public String getNumber() {
         return number;
