@@ -3,6 +3,7 @@ package ru.ifmo.rain.issuer.controller;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import ru.ifmo.rain.issuer.domain.ResponseMessage;
 import ru.ifmo.rain.issuer.domain.Transaction;
 import ru.ifmo.rain.issuer.service.CheckService;
 
@@ -18,20 +19,16 @@ public class TransactionController {
         this.checkService = checkService;
     }
 
-    private static class Response {
-        public String verdict;
-    }
-
     @GetMapping("/handle")
     @ResponseBody
-    public Response handle(@RequestBody @Valid Transaction transaction,
-                           BindingResult bindingResult) {
-        Response response = new Response();
+    public ResponseMessage handle(@RequestBody @Valid Transaction transaction,
+                                  BindingResult bindingResult) {
+        ResponseMessage responseMessage = new ResponseMessage();
         if (bindingResult.hasErrors()) {
-            response.verdict = "Incorrect transaction";
+            responseMessage.verdict = "Incorrect transaction";
         } else {
-            response.verdict = checkService.check(transaction);
+            responseMessage.verdict = checkService.check(transaction);
         }
-        return response;
+        return responseMessage;
     }
 }
