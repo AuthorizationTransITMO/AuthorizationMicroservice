@@ -7,6 +7,7 @@ import ru.ifmo.rain.issuer.domain.ResponseMessage;
 import ru.ifmo.rain.issuer.domain.Transaction;
 import ru.ifmo.rain.issuer.service.CheckService;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 @Controller
@@ -22,9 +23,11 @@ public class TransactionController {
     @GetMapping("/handle")
     @ResponseBody
     public ResponseMessage handle(@RequestBody @Valid Transaction transaction,
-                                  BindingResult bindingResult) {
+                                  BindingResult bindingResult,
+                                  HttpServletResponse response) {
         ResponseMessage responseMessage = new ResponseMessage();
         if (bindingResult.hasErrors()) {
+            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
             responseMessage.verdict = "Incorrect transaction";
         } else {
             responseMessage.verdict = checkService.check(transaction);

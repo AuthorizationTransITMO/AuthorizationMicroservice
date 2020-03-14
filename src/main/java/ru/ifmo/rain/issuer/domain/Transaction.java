@@ -1,5 +1,9 @@
 package ru.ifmo.rain.issuer.domain;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
@@ -16,7 +20,6 @@ public class Transaction {
     @Pattern(regexp = "\\d\\d/\\d\\d(\\d\\d)?")
     private String date;
     @NotNull
-    @NotEmpty
     private String ownerName;
     @NotNull
     @NotEmpty
@@ -24,8 +27,6 @@ public class Transaction {
     @NotNull
     @NotEmpty
     private String dateAction;
-    @NotNull
-    @NotEmpty
     private String targetPlace;
 
     public String getTargetPlace() {
@@ -82,5 +83,13 @@ public class Transaction {
 
     public void setDateAction(String dateAction) {
         this.dateAction = dateAction;
+    }
+
+    public String json() {
+        try {
+            return (new ObjectMapper()).writeValueAsString(this);
+        } catch (JsonProcessingException e) {
+            return "";
+        }
     }
 }
