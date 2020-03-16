@@ -28,6 +28,10 @@ public class Transaction {
     @NotEmpty
     private String dateAction;
     private String targetPlace;
+    @NotNull
+    @NotEmpty
+    @Pattern(regexp = "\\d{3}")
+    private String cvv2;
 
     public String getTargetPlace() {
         return targetPlace;
