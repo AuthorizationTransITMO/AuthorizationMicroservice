@@ -2,8 +2,10 @@ package ru.ifmo.rain.issuer.service;
 
 import org.springframework.stereotype.Service;
 import ru.ifmo.rain.issuer.domain.Account;
+import ru.ifmo.rain.issuer.domain.Log;
 import ru.ifmo.rain.issuer.domain.Transaction;
 import ru.ifmo.rain.issuer.repository.AccountRepository;
+import ru.ifmo.rain.issuer.repository.LogRepository;
 
 import java.time.format.DateTimeFormatter;
 import java.util.Optional;
@@ -11,6 +13,7 @@ import java.util.Optional;
 @Service
 public class CheckService {
     private final AccountRepository accountRepository;
+    private final LogRepository logRepository;
 
     private boolean compareTransaction(Transaction transaction) {
         return (hash(transaction.getNumber(), transaction.getDate()).equals(transaction.getCvv2()));
@@ -20,21 +23,23 @@ public class CheckService {
     }
 
 
-    public CheckService(AccountRepository accountRepository) {
+    public CheckService(AccountRepository accountRepository, LogRepository logRepository) {
         this.accountRepository = accountRepository;
+        this.logRepository = logRepository;
     }
 
     private String hash(String number, String date){
-        int n = 0;
-        for (int i = 0; i < date.length(); i++) {
-            n += ((int) date.charAt(i)) * ((int)number.charAt(0));
+        int hash = number.hashCode() + date.hashCode();
+
+        String returningHash = "";
+        hash %= 1000;
+
+        if (hash < 100) {
+            returningHash  = "0";
         }
 
-        n = (n % 900) + 100;
-        String s = "333";
-        System.out.println(s);
-        return String.valueOf(s);
-
+        returningHash.concat(String.valueOf(hash));
+        return returningHash;
     }
 
     public Optional<Account> findByNumber(String number){
@@ -45,15 +50,19 @@ public class CheckService {
 
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("MM/yyyy");
         if (transaction.getDate().equals(dtf.toString()))
-            return "Card is outdated";
+            return "Card date is not valid";
 
         if (!compareTransaction(transaction))
             return "Hash is not valid";
 
         Account account = findByNumber(transaction.getNumber()).orElse(new Account());
+        Account destinationAccount = findByNumber(transaction.getTargetPlace()).orElse(new Account());
 
         if (account == null)
             return "No such account";
+
+        if (destinationAccount == null)
+            return "No destination";
 
         if (!compareDB(transaction, account))
             return "Hash does not match DB";
@@ -61,7 +70,28 @@ public class CheckService {
         if (account.getOverDate().equals(transaction.getDate()))
             return "DB overDate does not match";
 
+        if (transaction.getAction() == "Take"); {
+            account.setCount(account.getCount() - transaction.getCount());
+            destinationAccount.setCount(destinationAccount.getCount() + transaction.getCount());
+        }
+        if (transaction.getAction() == "Add") {
+            account.setCount(account.getCount() + transaction.getCount());
+            destinationAccount.setCount(destinationAccount.getCount() - transaction.getCount());
+        }
+
+
         accountRepository.save(account);
+        accountRepository.save(destinationAccount);
+
+
+
+        Log log = new Log();
+        log.setTransactionJson(transaction.toString());
+        log.setId(7);
+        logRepository.save(log);
+
+
+
         return "OK";
     }
 }
