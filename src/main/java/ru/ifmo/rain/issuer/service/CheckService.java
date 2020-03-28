@@ -38,7 +38,7 @@ public class CheckService {
             returningHash  = "0";
         }
 
-        returningHash.concat(String.valueOf(hash));
+        returningHash = returningHash.concat(String.valueOf(hash));
         return returningHash;
     }
 
