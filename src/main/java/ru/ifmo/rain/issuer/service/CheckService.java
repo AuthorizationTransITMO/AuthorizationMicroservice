@@ -29,7 +29,7 @@ public class CheckService {
     }
 
     private String hash(String number, String date){
-        int hash = number.hashCode() + date.hashCode();
+        int hash = number.toString().hashCode() + date.toString().hashCode();
 
         String returningHash = "";
         hash %= 1000;
