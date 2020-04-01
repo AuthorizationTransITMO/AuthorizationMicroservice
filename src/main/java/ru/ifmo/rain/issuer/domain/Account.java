@@ -17,11 +17,11 @@ public class Account {
     @NotEmpty
     private String number;
     @NotNull
-    @NotEmpty
+    //Артём убрал not empty
     private Date overDate;
 
     @NotNull
-    @NotEmpty
+    //убрал not empty
     private Double count;
 
     public Double getCount() {
@@ -31,6 +31,10 @@ public class Account {
     public void setCount(Double count) {
         this.count = count;
     }
+
+    public void addCount(double a) { this.count += a; }
+
+    public void substractCount(double a) {this.count -= a; }
 
     public long getId() {
         return id;

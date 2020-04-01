@@ -28,9 +28,13 @@ public class TransactionController {
         ResponseMessage responseMessage = new ResponseMessage();
         if (bindingResult.hasErrors()) {
             response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+            System.out.println(bindingResult);
+            System.out.println("SOSi, Oleg");
             responseMessage.verdict = "Incorrect transaction";
         } else {
-            responseMessage.verdict = checkService.check(transaction);
+            responseMessage = (ResponseMessage) checkService.check(transaction);
+            System.out.println(responseMessage);
+
         }
         return responseMessage;
     }

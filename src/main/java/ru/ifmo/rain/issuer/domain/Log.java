@@ -3,6 +3,9 @@ package ru.ifmo.rain.issuer.domain;
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.Date;
 
 @Entity
@@ -21,7 +24,7 @@ public class Log {
     private String transactionJson;
 
     @NotNull
-    private Date date;
+    private LocalDate date;
 
     @NotNull
     private String returnedMessage;
@@ -34,11 +37,11 @@ public class Log {
         this.transactionJson = transactionJson;
     }
 
-    public Date getDate() {
+    public LocalDate getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(LocalDate date) {
         this.date = date;
     }
 

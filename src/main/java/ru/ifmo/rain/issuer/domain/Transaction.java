@@ -7,6 +7,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
+import java.util.Date;
 
 public class Transaction {
     @NotNull
@@ -33,7 +34,9 @@ public class Transaction {
     @Pattern(regexp = "\\d{3}")
     private String cvv2;
 
-    public String getCvv2() { return cvv2; }
+    public String getCvv2() {
+        return cvv2;
+    }
 
     public void setCvv2(String cvv2) { this.cvv2 = cvv2; }
 
@@ -99,5 +102,18 @@ public class Transaction {
         } catch (JsonProcessingException e) {
             return "";
         }
+    }
+
+    @Override
+    public String toString() {
+        return "Transaction{" +
+                "number='" + number + '\'' +
+                ", count=" + count +
+                ", date='" + date + '\'' +
+                ", ownerName='" + ownerName + '\'' +
+                ", action='" + action + '\'' +
+                ", dateAction='" + dateAction + '\'' +
+                ", targetPlace='" + targetPlace + '\'' +
+                '}';
     }
 }

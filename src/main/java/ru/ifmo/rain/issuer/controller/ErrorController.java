@@ -14,7 +14,7 @@ public class ErrorController implements org.springframework.boot.web.servlet.err
     @ResponseBody
     public ResponseMessage renderErrorPage(HttpServletRequest request) {
         ResponseMessage responseMessage = new ResponseMessage();
-        responseMessage.verdict = "error";
+        responseMessage.verdict = "transaction data is not valid";
         return responseMessage;
     }
 
