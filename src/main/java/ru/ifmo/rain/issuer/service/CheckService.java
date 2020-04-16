@@ -31,7 +31,6 @@ public class CheckService {
     public String customlyParseDate(Date date) {
         String newDate = "";
         newDate = newDate.concat(date.toString().split("-")[1]);
-        //System.out.println(date.toString().split("-")[1]);
         newDate = newDate.concat("/");
         newDate = newDate.concat(date.toString().split("-")[0]);
         return newDate;
@@ -88,9 +87,6 @@ public class CheckService {
         if (!transaction.getDate().equals(customlyParseDate(account.getOverDate())))
             return "DB overDate does not match";
 
-
-        //System.out.println(account.getCount());
-        //System.out.println(transaction.getCount());
         if (transaction.getAction() == "Take"); {
             if (account.getCount() < transaction.getCount())
                 return "Insufficient funds";
