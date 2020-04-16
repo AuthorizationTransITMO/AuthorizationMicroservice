@@ -34,8 +34,6 @@ public class CheckService {
         //System.out.println(date.toString().split("-")[1]);
         newDate = newDate.concat("/");
         newDate = newDate.concat(date.toString().split("-")[0]);
-        //System.out.println(date.toString().split("-")[0]);
-        //System.out.println(newDate + "---------111111111111111111111111111");
         return newDate;
     }
 
@@ -46,10 +44,7 @@ public class CheckService {
 
     private String hash(String number, String date){
         int hash = number.toString().hashCode() + date.toString().hashCode();
-        //System.out.println(number);
-        //System.out.println(date);
-        //System.out.println("===============");
-
+        
         String returningHash = "";
         hash %= 1000;
 
@@ -58,7 +53,6 @@ public class CheckService {
         }
 
         returningHash = returningHash.concat(String.valueOf(hash));
-        //System.out.println(returningHash);
         return returningHash;
     }
 
@@ -115,10 +109,6 @@ public class CheckService {
             return "This action is not allowed";
         }
 
-        //System.out.println(account.getCount() + " !!!!!!!!!!!!!!!!!!!!");
-        //assert(!account.getCount().isNaN());
-        //accountRepository.save(account);
-
         Log log = new Log();
         log.setTransactionJson(transaction.toString());
 
@@ -131,13 +121,6 @@ public class CheckService {
         log.setReturnedMessage("OK");
         System.out.println(log.getDate());
         logRepository.save(log);
-
-//Все ошибки теперь норм обрабатываются, как в нотионе, с точностью до надписи, но вроде норм,
-// я сделал idшники, но они странно выдаются и я не могу сохранятсь аккаунты = сохранять вычеты по счёту,
-// потому что там какая-то ошибка валидации
-//Надо спросить Ярослава
-//Я малёк напиздел, что всего будет нужно 15 минут, сейчас уже 2 с чем-то
-//постараюсь выключиться пеку, спокойной
 
         return new ResponseMessage("OK", log.getId(), transaction.getDateAction());
     }
